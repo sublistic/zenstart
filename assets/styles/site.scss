@@ -1,0 +1,282 @@
+@import 'normalize'; // normalize
+@import 'variables'; // site variables
+@import 'grid'; // grid system based on Bootstrap 3
+@import 'mixins'; // custom mixins including xxs breakpoint and block-grid
+@import 'navigation'; // navigation
+@import 'forms'; // cross-browser forms
+// @import 'test/test-breakpoints';
+// @import 'test/test-headings';
+
+
+/// z-indices reference ///
+// 99 - .navigation (navigation)
+// 99 - .menu-trigger (navigation)
+
+/// fonts reference ///
+// $font-family-heading: Georgia, 'Times New Roman', Times, serif;
+// $font-family-base: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+
+/// general ///
+html, body {
+    background-color: $body-bg;
+    color: $text-color;
+	width: 100%;
+	min-width: 320px; // this is to stop me going insane
+	overflow-x: hidden; // fix strange iOS horizontal scrollbar
+    font-family: $font-family-base;
+	font-size: $font-size-base; // set base font size to override absolute font sizes
+    line-height: $line-height-base;
+}
+
+	// * demo styles * //
+	body {
+		background-color: $gray-lightest;
+	}
+	.container {
+		background-color: $body-bg;
+	}
+	// * end demo * //
+
+/// typography ///
+p {
+	margin-bottom: 1.3em;
+}
+
+// headings - perfect fourth (based on http://type-scale.com/)
+h1, h2, h3, h4, h5, h6 {
+    font-family: $font-family-heading;
+	font-weight: 400;
+	line-height: 1.2;
+	margin: 0 0 .5em;
+
+	a, a:hover, a:active, a:focus {
+		color: inherit;
+	}
+}
+
+h1 {
+	font-size: 3.157rem;
+}
+
+h2 {
+	font-size: 2.369rem;
+}
+
+h3 {
+	font-size: 1.777rem;
+}
+
+h4 {
+	font-size: 1.333rem;
+}
+
+h5 {
+	font-size: 1rem;
+}
+
+h6 {
+	font-size: $font-size-small;
+}
+
+// only have a top margin if there is something before the heading
+* + h1, * + h2, * + h3, * + h4, * + h5, * + h6 {
+	margin: 1.414em 0 .5em;
+}
+
+// smaller gaps between consecutive headings
+h1 + h2, h1 + h3, h1 + h4, h1 + h5, h2 + h3, h2 + h4, h2 + h5, h3 + h4, h3 + h5, h4 + h5 {
+	margin-top: -.3em;
+}
+
+// text helpers
+.text-nowrap {
+	display: inline-block;
+}
+
+.text-small {
+	font-size: $font-size-small;
+}
+
+.text-black {
+	color: $black;
+}
+
+.text-white {
+	color: $white;
+}
+
+// links
+a, a:active, a:focus, button, button:focus {
+    @include box-shadow(none);
+	outline: 0;
+}
+
+a, a:active {
+    color: $link-color;
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    color: $link-hover-color;
+	text-decoration: underline;
+}
+
+
+/// buttons ///
+// button ($color, $background, $border)
+.btn, button {
+	@include button($white, $link-color, $link-color);
+}
+
+// button variations ($color, $background, $border, $border-size)
+.btn-wire {
+	@include button-wire($black, $white, $link-color, 1px);
+}
+
+// animate hover transitions
+button, .btn, a{
+	@include transition(background .3s ease, color .3s ease);
+
+	&:hover, &:focus {
+		@include transition(background .3s ease, color .3s ease);
+	}
+}
+
+
+/// forms ///
+input[type=submit] {
+	@extend .btn;
+}
+
+/// images ///
+img {
+	height: auto;
+	max-width: 100%;
+}
+
+
+/// grid framework ///
+	// * demo styles * //
+	footer {
+		@include make-container;
+	}
+
+	.container {
+		padding-bottom: 20px;
+		padding-top: 20px;
+	}
+	// * end demo * //
+
+
+/// header ///
+	// * demo styles * //
+	.logo {
+		@include make-xs-column(12);
+		@include make-sm-column(3);
+	}
+
+	.welcome {
+		@include make-xs-column(12);
+		@include make-sm-column(9);
+	}
+	// * end demo * //
+
+
+/// nav ///
+	// * demo styles * //
+	// nav ul {
+	// 	@include make-row;
+	// 	list-style-type: none;
+	// 	margin: 0;
+	// 	padding: 0;
+	// 	background-color: $gray;
+	// }
+
+	// nav li a {
+	// 	display: inline-block;
+	// 	// float: left;
+	// 	padding: 20px;
+	// 	color: $white;
+
+	// 	&:hover, &:focus {
+	// 		text-decoration: none;
+	// 		background-color: $gray-dark;
+	// 		color: $white;
+	// 	}
+	// }
+	// * end demo * //
+
+/// footer ///
+	// * demo styles * //
+	footer {
+		text-align: center;
+		font-size: $font-size-small;
+		background-color: $gray;
+		padding: 20px;
+	}
+	// * end demo * //
+
+
+/// structure ///
+
+
+
+/// pages ///
+// home
+	// * demo styles * //
+	.swatch {
+		padding: 15px;
+		margin: 10px 0;
+	}
+
+	.primary {
+		background-color: $primary;
+	}
+
+	.success {
+		background-color: $success;
+	}
+
+	.info {
+		background-color: $info;
+	}
+
+	.warning {
+		background-color: $warning;
+	}
+
+	.danger {
+		background-color: $danger;
+	}
+	// * end demo * //
+
+// about
+
+// news etc.
+
+
+/// media queries ///
+@include xs { // xs >= 480px
+
+}
+
+@include sm { // sm >= 768px
+
+}
+
+@include md { // md >= 992px
+
+}
+
+@include lg { // lg >= 1200px
+
+}
+
+@include xl { // xl >= 1440px
+
+}
+
+@include xxs { // xxs < 480px - hack
+
+}

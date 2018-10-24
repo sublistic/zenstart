@@ -1,0 +1,53 @@
+// bootstrap breakpoints
+body:after {
+	position: fixed;
+	z-index: 1000000;
+	display: block;
+	top: 10px;
+	left: 10px;
+	text-align: center;
+	font-size: 2em;
+	color: #fff;
+	padding: 0 .2em;
+	background-color: #2b2;
+	border-radius: 3px;
+}
+
+
+// - xs >= 480px
+@media (min-width: $screen-xs-min){
+	body:after {
+		content: 'XS';
+	}
+}
+
+// - sm >= 768px
+@media (min-width: $screen-sm-min){
+	body:after {
+		content: 'SM';
+	}
+}
+
+// - md >= 992px
+@media (min-width: $screen-md-min){
+	body:after {
+		content: 'MD';
+	}
+}
+
+// - lg >= 1200px
+@media (min-width: $screen-lg-min){
+	body:after {
+		content: 'LG';
+	}
+}
+
+// not so bootstrap
+
+// - xxs < 480px
+@media (max-width: ($screen-xs-min) - 1px){
+	body:after {
+		content: 'XXS';
+	}
+}
+

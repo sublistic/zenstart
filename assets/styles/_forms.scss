@@ -1,0 +1,319 @@
+// @todo: better default form styling
+
+// from http://responsivebp.com/css/forms/
+
+// forms
+$form-line-height: 1.4 !default;
+$form-placeholder: #767676 !default;
+$form-input-padding: .25rem !default;
+$form-input-height: 2rem !default;
+$form-input-background: #fff !default;
+$form-input-border: 1px solid #c0c0c0 !default;
+$form-input-border-radius: 0 !default;
+$form-input-color: #222 !default;
+$form-input-background-disabled: #ebebeb !default;
+$form-input-border-color-disabled: #c0c0c0 !default;
+$form-input-color-disabled: #c0c0c0 !default;
+$form-input-background-readonly: null !default;
+$form-input-border-color-readonly: #ebebeb !default;
+$form-input-color-readonly: null !default;
+
+// buttons
+$button-background: #dadada !default;
+$button-border: solid 1px #c0c0c0 !default;
+$button-color-disabled: #5d5d5d !default;
+
+input[type='submit'] {
+	background-color: $button-background;
+	border: $button-border;
+
+}
+
+// normalize
+fieldset {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+legend {
+	display: block;
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+label {
+	display: block;
+	margin-bottom: 1rem;
+
+	&[for] {
+		cursor: pointer;
+	}
+
+	> input, > input[type='checkbox'], > input[type='radio'], > select {
+		display: inline-block;
+		margin: 0 1rem 0 0;
+		vertical-align: text-top;
+	}
+}
+
+select, textarea, input, .readonly {
+	display: block;
+	height: $form-input-height;
+	padding: $form-input-padding;
+	width: 100%;
+	margin-bottom: 1rem;
+	background: $form-input-background;
+	border: $form-input-border;
+	border-radius: $form-input-border-radius;
+	color: $form-input-color;
+	font-family: inherit;
+
+	// disabled
+	// 1. add cursor for disabled elements.
+	// 2. fix ios 6/7 opacity issue
+	fieldset[disabled] &, &[disabled] {
+		background: $form-input-background-disabled;
+		border-color: $form-input-border-color-disabled;
+		color: $form-input-color-disabled;
+		cursor: not-allowed; // 1
+		opacity: 1; // 2
+	}
+
+	&:focus, &:active {
+		@include box-shadow(none);
+		outline: 0;
+	}
+}
+
+.readonly[hidden] {
+	display: none;
+}
+
+// clean up that hideous file input.
+input[type='file']::-ms-value {
+	background: $form-input-background;
+	border: 0;
+}
+
+input[type='file']::-ms-browse {
+	padding-top: .1rem;
+	background: $button-background;
+	border: $button-border;
+	color: $form-input-color;
+
+	&:active {
+		background-color: lighten($button-background, 5);
+	}
+}
+
+input[type='file']::-webkit-file-upload-button {
+	-webkit-appearance: none;
+	border-radius: 0;
+	background: $button-background;
+	border: $button-border;
+	color: $form-input-color;
+
+	&:active {
+		background-color: lighten($button-background, 5);
+	}
+}
+
+input[type='color'] {
+	max-width: 6.563rem;
+}
+
+// declared separately to reduce selector duplication for padding
+input[type='radio'], input[type='checkbox'] {
+	height: 1.334rem;
+	min-width: 1.334rem;
+	margin-bottom: 1.1rem;
+	padding: 0;
+	width: auto;
+}
+
+// 1: fix background in ie
+// 2: remove border in ie9
+input[type='radio'] {
+	border-radius: 100%; // 1
+	border: none \9; // 2
+}
+
+// add range styles for ie9
+input[type='range'] {
+	border: 1px solid transparent;
+	border: $form-input-border \9;
+	background-color: transparent;
+	background-color: $form-input-background \9;
+	padding: $form-input-padding 0;
+	padding: $form-input-padding \9;
+}
+
+// 1. remove borders and padding on range controls in ie10+
+_::-ms-reveal, input[type='range'] {
+	border: 1px solid transparent; // 1
+}
+
+// fix field styling on iphone and ipad.
+// 1. strip os styling on ios
+select, textarea, input[type='text'], input[type='search'], input[type='datetime'], input[type='datetime-local'], input[type='date'], input[type='week'], input[type='month'], input[type='time'], input[type='number'], input[type='password'], input[type='tel'], input[type='email'], input[type='url'], input[type='color'] {
+	-webkit-appearance: none; // 1
+}
+
+// 1: remove border and and bgcolor around caret on ie10+
+select {
+	&::-ms-expand {
+		border: 0;
+		background-color: inherit; // 1
+	}
+
+	option {
+		height: 100%;
+	}
+}
+
+[multiple] {
+	height: auto;
+
+	option {
+		height: auto;
+	}
+}
+
+// textareas : multiple resizable options.
+// 1: horizontal
+// 2: vertical
+// 3: none
+textarea {
+	height: auto;
+	min-height: 5.25rem;
+	resize: both;
+
+	&.horizontal {
+		resize: horizontal; // 1
+	}
+
+	&.vertical {
+		resize: vertical; // 2
+	}
+
+	&.no-resize {
+		resize: none; // 3
+	}
+}
+
+// read only
+.readonly, [readonly] {
+	background-color: $form-input-background-readonly;
+	border-color: $form-input-border-color-readonly;
+	color: $form-input-color-readonly;
+	cursor: not-allowed;
+}
+
+// placeholder
+
+// 1: ensure color is correct in firefox
+::placeholder {
+	color: $form-placeholder;
+	opacity: 1; // 1
+}
+
+@-moz-document url-prefix() {
+	// remove excess padding in firefox
+	input[type='color'] {
+		padding: 0;
+	}
+
+	// 1: fix file display height.
+	input[type='file'] {
+		height: auto;
+		min-height: $form-input-height; // 1
+	}
+}
+
+@media (-webkit-min-device-pixel-ratio:0) {
+	// remove excess padding in webkit
+	input[type='color'] {
+		padding: 0;
+
+		&::-webkit-color-swatch-wrapper {
+			padding: 0;
+		}
+
+		&::-webkit-color-swatch {
+			border: 0;
+		}
+	}
+
+	// fix field styling on iphone and ipad.
+	// 1. add a select indicator
+	// 2. remove for multiple
+	select {
+		background-image: url('data:image/svg+xml;base64,phn2zyb4bwxucz0iahr0cdovl3d3dy53my5vcmcvmjawmc9zdmciihdpzhropsixmsigagvpz2h0psixmc41ij48cg9sewdvbibmawxspsijmjiyiibwb2ludhm9ijexldagns41ldkgmcwwii8+pc9zdmc+'); // 1
+		background-repeat: no-repeat;
+		background-position: right .6rem center;
+		padding-right: 1.67rem;
+
+		&[multiple] {
+			background-image: none; // 2
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}
+
+// inline
+input.inline-block, select.inline-block {
+	width: auto;
+}
+
+// actions - contains buttons
+.form-actions {
+	margin: 1rem 0;
+	padding: 1rem 0;
+}
+
+// grouped inputs.
+.input-group, .btn-group {
+	position: relative;
+	display: table;
+	border-collapse: separate;
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.btn-group {
+	width: auto;
+}
+
+.input-group > *, .btn-group > * {
+	display: table-cell;
+	margin-bottom: 0;
+}
+
+.input-group-addon {
+	width: 1%;
+	white-space: nowrap;
+	vertical-align: middle;
+
+	// force no margin on checkbox, radio
+	> * {
+		margin-bottom: 0 !important; // 1
+	}
+}
+
+// supplementary content for displaying symbols.
+.supplement {
+	padding: 0 1rem;
+	line-height: $form-line-height;
+	background: $button-background;
+	border: $button-border;
+
+	&:first-child {
+		border-right: 0;
+	}
+
+	&:last-child {
+		border-left: 0;
+	}
+}

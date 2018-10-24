@@ -1,0 +1,267 @@
+// _mixins (_variables)
+@import 'mixins';
+
+nav {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.navigation {
+	display: none;
+	position: absolute;
+    top: 0;
+	right: 0;
+    min-height: 100vh;
+	width: $menu-width;
+	list-style: none;
+	margin: 0;
+	padding: $menu-padding;
+    background-color: $menu-bg;
+    color: $menu-color;
+    font-size: $menu-font-size;
+	z-index: 99;
+
+	li {
+		margin: 0;
+        padding: 0;
+
+		&::before {
+			display: none;
+        }
+        
+        // remove last separator
+        &:last-of-type a {
+            border-bottom: 0;
+        }
+	}
+
+	a {
+		display: block;
+		width: 100%;
+		float: left;
+		padding: $menu-link-padding;
+		margin: $menu-link-spacing 0;
+		color: $menu-link-color;
+		text-transform: $menu-text-transform;
+        text-align: left;
+
+        // seperator
+        border: 0;
+        border-bottom: $menu-separator-width solid $menu-color;
+
+        // transparent border to counter active
+        border-#{$menu-active-direction}: $menu-active-border-width solid transparent;
+
+		&:hover, &:focus {
+			text-decoration: none;
+			background-color: $menu-link-hover-bg;
+			color: $menu-link-hover-color;
+        }
+        
+        &:active {
+            text-decoration: none;
+			background-color: $menu-link-active-bg;
+			color: $menu-link-active-color;
+        }
+	}
+
+	.active a {
+		border-#{$menu-active-direction}: $menu-active-border-width solid $menu-link-active-color;
+	}
+}
+
+.menu-trigger {
+    @include transition(all .3s ease-in);
+    display: block;
+    -webkit-appearance: none;
+	position: absolute;
+	top: 10px;
+	width: 50px;
+	height: 60px;
+    padding: 0;
+    background-color: $navbar-toggle-bg;
+	text-align: center;
+	z-index: 99;
+	right: 10px;
+    
+	&:hover {
+        background-color: $navbar-toggle-hover-bg;
+        text-decoration: none;
+        cursor: pointer;
+        
+        .menu-icon, .menu-icon::before, .menu-icon::after {
+            background-color: $navbar-toggle-hover-color;
+        }
+	}
+    
+	&.is-open {
+		@include transition(all .4s ease-out);
+        right: $menu-width;
+        margin-right: 5px;
+        background-color: $navbar-toggle-active-bg;
+	}
+
+	&.is-closed {
+        @include transition(all .3s ease-in);
+	}
+}
+
+.menu-icon {
+	display: block;
+	@include transition(transform .15s ease);
+	top: 27.5px;
+	margin: 0 10px;
+
+	&, &::before, &::after {
+		background-color: $navbar-toggle-color;
+		border-radius: 4px;
+		height: 5px;
+		position: absolute;
+		width: 30px;
+	}
+
+	&::before, &::after {
+		content: '';
+		display: block;
+	}
+
+	&::before {
+		@include transition(top .075s .12s ease, transform .15s ease, opacity .075s ease);
+		top: -8px;
+	}
+
+	&::after {
+		bottom: -8px;
+		@include transition(bottom .075s .12s ease, transform .075s cubic-bezier(.55, .055, .675, .19));
+
+	}
+}
+
+.is-open .menu-icon {
+	transform: rotate(45deg);
+	transition-delay: .12s;
+    transition-timing-function: cubic-bezier(.215, .61, .355, 1);
+    
+    &, &::before, &::after {
+        background-color: $navbar-toggle-active-color;
+    }
+
+	&::before {
+		opacity: 0;
+		top: 0;
+		@include transition(top .075s ease, opacity .075s .12s ease);
+	}
+
+	&::after {
+		bottom: 0;
+		transform: rotate(-90deg);
+		@include transition(bottom .075s ease, transform .075s .12s cubic-bezier(.215, .61, .355, 1));
+	}
+}
+
+.hide-overflow {
+	overflow: hidden;
+	background-color: $body-bg;
+    @include transition(background .4s ease-out);
+
+	header, main, footer {
+		opacity: .05;
+		@include transition(opacity .4s ease-out);
+        
+        a {
+            visibility: hidden;
+        }
+	}
+
+}
+
+// desktop nav
+@include sm {
+
+    .nav-container {
+        @include make-container();
+        background-color: $navbar-bg;
+        border-top: $navbar-border-width solid $navbar-border-color;
+        border-bottom: $navbar-border-width solid $navbar-border-color;
+    }
+    
+    .menu-trigger {
+        display: none;
+    }
+
+	nav {
+		position: relative;
+		max-height: $navbar-height;
+		overflow: hidden;
+	}
+
+	.navigation {
+		@include make-xs-column(12);
+		display: block;
+		position: relative;
+		min-height: none;
+        height: $navbar-height;
+        width: 100%;
+        text-align: center;
+		padding: 0;
+        background-color: $navbar-bg;
+        color: $navbar-color;
+        font-size: $navbar-font-size;
+
+		li {
+			position: relative;
+			display: inline-block;
+			height: $navbar-height;
+
+			// hide HOME in desktop nav
+			&.first {
+				display: none;
+			}
+            
+            // remove last separator
+            &:last-of-type a {
+                border-right: 0;
+            }
+
+            // image or text separator
+            // &:nth-of-type(1n+3)::after {
+            // 	content: '\2022';
+            //     position: absolute;
+            //     height: $navbar-height;
+            //     top: (($navbar-height - $line-height-computed) / 2);
+            //     font-size: 10px;
+            //     left: -5px;
+            // }
+		}
+
+		a {
+			height: $navbar-height;
+			padding: $navbar-link-padding;
+			line-height: $navbar-height/2;
+			margin: 0 $navbar-link-spacing;
+            
+            // seperator
+            border: 0;
+            border-right: $navbar-separator-width solid $navbar-color;
+
+            // transparent border to counter active
+            border-#{$navbar-active-direction}: $navbar-active-border-width solid transparent;
+
+			&:hover, &:focus {
+				background-color: $navbar-link-hover-bg;
+				color: $navbar-link-hover-color;
+            }
+            
+            &:active {
+                background-color: $navbar-link-active-bg;
+                color: $navbar-link-active-color;
+            }
+        }
+        
+        .active a {
+            border-#{$menu-active-direction}: 0;
+            border-#{$navbar-active-direction}: $navbar-active-border-width solid $navbar-link-active-color;
+        }
+	}
+}
